@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import LogoUtalca from "./LogoUtalca";
+import BotonGitHub from "./BotonGitHub";
 
 function NavBarPrincipal() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-white text-gray-900 px-4 py-2 shadow-md z-50">
+    <nav className="fixed top-0 left-0 w-full bg-white text-gray-900 px-4 py-1 shadow-md z-50">
       {/* Contenedor principal */}
       <div className="flex items-center justify-between">
         {/* Logo a la izquierda */}
@@ -37,13 +38,13 @@ function NavBarPrincipal() {
         {/* Menú en pantallas grandes */}
         <div className="hidden md:flex md:items-center md:space-x-6">
           <a
-            href="#"
+            href="/"
             className="hover:text-blue-400 transition duration-300"
           >
             Inicio
           </a>
           <a
-            href="#"
+            href="/about"
             className="hover:text-blue-400 transition duration-300"
           >
             Sobre Nosotros
@@ -54,14 +55,7 @@ function NavBarPrincipal() {
           >
             Contacto
           </a>
-          <a
-            href="https://github.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-blue-400 transition duration-300"
-          >
-            GitHub
-          </a>
+          <BotonGitHub/>
         </div>
       </div>
 
