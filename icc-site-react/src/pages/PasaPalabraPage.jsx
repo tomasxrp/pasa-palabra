@@ -56,7 +56,7 @@ function PasaPalabraPage(){
         const nuevasCorrectas = prev + 1;
 
         // Mostrar el modal si se alcanzan 3 respuestas correctas
-        if (nuevasCorrectas === 3) {
+       if (nuevasCorrectas === 3) {
           setMostrarModal(true);
           setGanador(true);
         }
@@ -69,11 +69,12 @@ function PasaPalabraPage(){
       // Después de mostrar el mensaje de "Respuesta correcta", avanza al siguiente índice
       setTimeout(() => {
           // Avanzar al siguiente índice (letra)
-          cambioIndice(indiceActual + 1 % preguntas.length);
+          cambioIndice((indiceActual + 1) % preguntas.length);
           setRespuesta(""); // Limpiar la respuesta
           setRespuestaCorrecta(null); // Restablecer el estado de la respuesta
       }, 1000); // Tiempo para mostrar la respuesta correcta
   } else {
+      console.log("Respuesta incorrecta");
       setnumeroVidas(prev => prev - 1); 
 
       if (numeroVidas < 1) {
@@ -101,22 +102,20 @@ function PasaPalabraPage(){
       <GameBoard
         indiceActual={indiceActual}
         cambioIndice={cambioIndice}
-        pregunta={preguntas[indiceActual].pregunta} // Pasa la pregunta correspondiente
+        pregunta={preguntas[indiceActual].pregunta} 
         respuesta={respuesta}
         setRespuesta={setRespuesta}
         enviarRespuesta={enviarRespuesta}
         esRespuestaCorrecta={esRespuestaCorrecta}
       />
       <ModalGanador
-          mostrar={mostrarModal}
-          esGanador = {ganador}
-          onClose={() => {
-            setMostrarModal(false);
-            reiniciarJuego();
-          }
-
-          } // Cierra el modal al hacer clic en "Aceptar"
-        />
+      mostrar={mostrarModal}
+      ganador={numeroRespuestasCorrectas >= 3} 
+      onClose={() => {
+        setMostrarModal(false);
+        reiniciarJuego();
+      }}
+/>
     </div>
     </>
   )
