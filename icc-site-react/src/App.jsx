@@ -10,7 +10,7 @@ function App() {
   return(
     <div className="pt-20 bg-white w-full h-screen ">
       <NavBarPrincipal/>
-      <div className='p-4 w-full justify-center'>
+      <div className='p-4 w-full h-screen justify-center bg-white'>
         <Hero/>
         <CardGame/>
       </div>
