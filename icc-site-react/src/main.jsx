@@ -13,6 +13,7 @@ createRoot(document.getElementById('root')).render(
         <Route path="/" element={<App />} /> {/* Página principal */}
         <Route path="/juego" element={<PasaPalabraPage />} /> {/* Página secundaria */}
         <Route path='/about' element={<AboutPage/>} /> {/* Página secundaria */}
+          /* probando jeje */
       </Routes>
     </BrowserRouter>
   </StrictMode>,
