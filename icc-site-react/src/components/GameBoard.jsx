@@ -1,4 +1,5 @@
 import React from "react";
+import Temporizador from "./Temporizador";
 
 const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
 
@@ -54,6 +55,8 @@ const GameBoard = ({
 
             {/* Sección derecha: Preguntas y respuestas */}
             <div className="w-full md:w-1/2 flex flex-col items-center justify-center bg-white p-4 md:p-10">
+                <Temporizador></Temporizador>
+
                 <h2 className="text-xl md:text-2xl font-bold mb-4 text-gray-700">Pregunta:</h2>
                 <p className="text-base md:text-lg text-gray-600 mb-6">
                     {pregunta} {/* Aquí se muestra la pregunta */}
