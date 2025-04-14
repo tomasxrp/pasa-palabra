@@ -1,9 +1,8 @@
 import React from "react";
 import Temporizador from "./Temporizador";
 
-const letras = "ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split("");
-
 const GameBoard = ({ 
+    letras,
     indiceActual,
     cambioIndice,
     pregunta,

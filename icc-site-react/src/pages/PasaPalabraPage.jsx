@@ -2,52 +2,78 @@ import React from 'react'
 import { useState } from 'react'
 import GameBoard from '../components/GameBoard'
 import ModalGanador from '../components/ModalGanador'
+import { useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 import '../App.css'
 
 function PasaPalabraPage(){
-    const [indiceActual, setIndiceActual] = useState(0)
+  const [indiceActual, setIndiceActual] = useState(0)
+  const [preguntas, setPreguntas] = useState([]);
   const [respuesta, setRespuesta] = useState(''); 
   const [esRespuestaCorrecta, setRespuestaCorrecta] = useState(null);
   const [numeroRespuestasCorrectas, setNumeroRespuestasCorrectas] = useState(0);
   const [numeroVidas, setnumeroVidas] = useState(3);
   const [mostrarModal, setMostrarModal] = useState(false);
   const [ganador, setGanador] = useState(false);
-  
+  const location = useLocation();
+  const [dificultad, setDificultad] = useState('');
+  const [letras, setLetras] = useState([]);
 
-  const preguntas = [
-    { letra: 'A', pregunta: '¿Que animal es conocido por su gran trompa?', respuesta: 'elefante' },
-    { letra: 'B', pregunta: '¿Que insecto produce miel?', respuesta: 'abeja' },
-    { letra: 'C', pregunta: '¿Como se llama el continente donde esta Egipto?', respuesta: 'africa' },
-    { letra: 'D', pregunta: '¿Que gas es fundamental para la respiracion humana?', respuesta: 'dioxido de carbono' },
-    { letra: 'E', pregunta: '¿Cual es el organo encargado de bombear sangre en el cuerpo?', respuesta: 'corazon' },
-    { letra: 'F', pregunta: '¿Que objeto se usa para volar en el cielo con viento?', respuesta: 'cometa' },
-    { letra: 'G', pregunta: '¿Que instrumento musical tiene cuerdas y se toca con las manos?', respuesta: 'guitarra' },
-    { letra: 'H', pregunta: '¿Que gas es el mas abundante en el universo?', respuesta: 'hidrogeno' },
-    { letra: 'I', pregunta: '¿Que pais tiene como capital a Islamabad?', respuesta: 'pakistan' },
-    { letra: 'J', pregunta: '¿Que fruta tropical es de color amarillo y tiene cascara gruesa?', respuesta: 'banana' },
-    { letra: 'K', pregunta: '¿Cual es un arte marcial de origen japones?', respuesta: 'karate' },
-    { letra: 'L', pregunta: '¿Que mamifero marino es conocido por cantar bajo el agua?', respuesta: 'ballena' },
-    { letra: 'M', pregunta: '¿Que astro es el satelite natural de la Tierra?', respuesta: 'luna' },
-    { letra: 'N', pregunta: '¿Que gas compone la mayor parte del aire que respiramos?', respuesta: 'nitrogeno' },
-    { letra: 'Ñ', pregunta: 'Contiene la letra Ñ, ¿como se llama el rio mas largo de España?', respuesta: 'tajo' },
-    { letra: 'O', pregunta: '¿Que fruta es redonda, de color anaranjado y rica en vitamina C?', respuesta: 'naranja' },
-    { letra: 'P', pregunta: '¿Que metal precioso es conocido por su color dorado?', respuesta: 'oro' },
-    { letra: 'Q', pregunta: '¿Que capital de Ecuador empieza con la letra Q?', respuesta: 'quito' },
-    { letra: 'R', pregunta: '¿Que animal es conocido por su rapidez y manchas en la piel?', respuesta: 'guepardo' },
-    { letra: 'S', pregunta: '¿Que liquido se usa para cocinar y proviene del mar?', respuesta: 'sal' },
-    { letra: 'T', pregunta: '¿Que planeta del sistema solar es el mas grande?', respuesta: 'jupiter' },
-    { letra: 'U', pregunta: '¿Que pais sudamericano tiene a Montevideo como capital?', respuesta: 'uruguay' },
-    { letra: 'V', pregunta: '¿Que liquido rojo transporta oxigeno en el cuerpo humano?', respuesta: 'sangre' },
-    { letra: 'W', pregunta: '¿Que ciudad de Estados Unidos es la capital del pais?', respuesta: 'washington d.c.' },
-    { letra: 'X', pregunta: 'Contiene la letra X, ¿que instrumento musical de percusion tiene placas metalicas?', respuesta: 'xilofono' },
-    { letra: 'Y', pregunta: '¿Que pais de Asia tiene su nombre con la letra Y?', respuesta: 'yemen' },
-    { letra: 'Z', pregunta: '¿Que mamifero con rayas blancas y negras vive en Africa?', respuesta: 'cebra' }
+  const todasLasPreguntas = [
+    { letra: 'A', pregunta: '¿Qué animal es conocido por su gran trompa?', respuesta: 'elefante' },
+    { letra: 'B', pregunta: '¿Qué insecto produce miel?', respuesta: 'abeja' },
+    { letra: 'C', pregunta: '¿Cómo se llama el continente donde está Egipto?', respuesta: 'africa' },
+    { letra: 'D', pregunta: '¿Qué gas es fundamental para la respiración humana?', respuesta: 'dioxido de carbono' },
+    { letra: 'E', pregunta: '¿Cuál es el órgano encargado de bombear sangre en el cuerpo?', respuesta: 'corazon' },
+    { letra: 'F', pregunta: '¿Qué objeto se usa para volar en el cielo con viento?', respuesta: 'cometa' },
+    { letra: 'G', pregunta: '¿Qué instrumento musical tiene cuerdas y se toca con las manos?', respuesta: 'guitarra' },
+    { letra: 'H', pregunta: '¿Qué gas es el más abundante en el universo?', respuesta: 'hidrogeno' },
+    { letra: 'I', pregunta: '¿Qué país tiene como capital a Islamabad?', respuesta: 'pakistan' },
+    { letra: 'J', pregunta: '¿Qué fruta tropical es de color amarillo y tiene cáscara gruesa?', respuesta: 'banana' },
+    { letra: 'K', pregunta: '¿Cuál es un arte marcial de origen japonés?', respuesta: 'karate' },
+    { letra: 'L', pregunta: '¿Qué mamífero marino es conocido por cantar bajo el agua?', respuesta: 'ballena' },
+    { letra: 'M', pregunta: '¿Qué astro es el satélite natural de la Tierra?', respuesta: 'luna' },
+    { letra: 'N', pregunta: '¿Qué gas compone la mayor parte del aire que respiramos?', respuesta: 'nitrogeno' },
+    { letra: 'Ñ', pregunta: 'Contiene la letra Ñ, ¿cómo se llama el río más largo de España?', respuesta: 'tajo' },
+    { letra: 'O', pregunta: '¿Qué fruta es redonda, de color anaranjado y rica en vitamina C?', respuesta: 'naranja' },
+    { letra: 'P', pregunta: '¿Qué metal precioso es conocido por su color dorado?', respuesta: 'oro' },
+    { letra: 'Q', pregunta: '¿Qué capital de Ecuador empieza con la letra Q?', respuesta: 'quito' },
+    { letra: 'R', pregunta: '¿Qué animal es conocido por su rapidez y manchas en la piel?', respuesta: 'guepardo' },
+    { letra: 'S', pregunta: '¿Qué líquido se usa para cocinar y proviene del mar?', respuesta: 'sal' },
+    { letra: 'T', pregunta: '¿Qué planeta del sistema solar es el más grande?', respuesta: 'jupiter' },
+    { letra: 'U', pregunta: '¿Qué país sudamericano tiene a Montevideo como capital?', respuesta: 'uruguay' },
+    { letra: 'V', pregunta: '¿Qué líquido rojo transporta oxígeno en el cuerpo humano?', respuesta: 'sangre' },
+    { letra: 'W', pregunta: '¿Qué ciudad de Estados Unidos es la capital del país?', respuesta: 'washington d.c.' },
+    { letra: 'X', pregunta: 'Contiene la letra X, ¿qué instrumento musical de percusión tiene placas metálicas?', respuesta: 'xilofono' },
+    { letra: 'Y', pregunta: '¿Qué país de Asia tiene su nombre con la letra Y?', respuesta: 'yemen' },
+    { letra: 'Z', pregunta: '¿Qué mamífero con rayas blancas y negras vive en África?', respuesta: 'cebra' },
   ];
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const dificultadParam = queryParams.get('dificultad');
+    setDificultad(dificultadParam || '');
+
+    if (dificultadParam === 'baja') {
+      setPreguntas(todasLasPreguntas.slice(0, 10)); // Primeras 8 preguntas
+      setLetras("ABCDEFGHIJ".split(''));
+    }
+    else if (dificultadParam === 'media') {
+      setPreguntas(todasLasPreguntas.slice(0, 15)); // Primeras 15 preguntas
+      setLetras("ABCDEFGHIJKLMNO".split(''));
+    }
+    else if (dificultadParam === 'completa') {
+      setPreguntas(todasLasPreguntas); 
+      setLetras("ABCDEFGHIJKLMNÑOPQRSTUVWXYZ".split(''));
+    }
+  }, [location])
+
+  console.log(dificultad);
 
   const cambioIndice = (nuevoIndice) => {
     setIndiceActual(nuevoIndice); 
   };
-
+  
 
   const enviarRespuesta = () =>{
     if (respuesta.toLowerCase() === preguntas[indiceActual].respuesta.toLowerCase()) {
@@ -100,9 +126,10 @@ function PasaPalabraPage(){
       <div className="flex flex-col items-center justify-center h-screen bg-gray-900 text-white">
       <h1 className="text-3xl font-bold mb-4">Pasapalabra</h1>
       <GameBoard
+        letras={letras}
         indiceActual={indiceActual}
         cambioIndice={cambioIndice}
-        pregunta={preguntas[indiceActual].pregunta} 
+        pregunta={preguntas[indiceActual]?.pregunta} 
         respuesta={respuesta}
         setRespuesta={setRespuesta}
         enviarRespuesta={enviarRespuesta}
